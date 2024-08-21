@@ -7,4 +7,5 @@ export {
   Card,
   CardBody,
   CardFooter,
+  Textarea,
 } from "@material-tailwind/react";

@@ -31,7 +31,7 @@ export function CreateTodo() {
             className="text-black rounded w-full p-1"
           />
         </label>
-        <button className="mt-2 hover:border-white hover:rounded border rounded border-blue-gray-200 w-min py-1 px-3 place-self-center">
+        <button className="mt-5 hover:border-white hover:rounded border rounded border-blue-gray-200 w-min py-1 px-3 place-self-center">
           CREATE
         </button>
       </form>

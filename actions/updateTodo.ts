@@ -1,26 +1,22 @@
 "use server";
 import { client } from "@/db";
+import { ITodo } from "@/types";
 import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
 
-interface IUpdateTodo {
-  text: string;
-  id: string;
-  status: "pending" | "completed";
-}
-
 export const updateTodo = async ({
-  text,
-  id,
+  text = "",
+  id = "",
   status = "pending",
-}: IUpdateTodo) => {
+  comment = "",
+}: Partial<ITodo>) => {
   try {
     const result = await client
       .db("app-todos")
       .collection("todos")
       .findOneAndUpdate(
         { _id: ObjectId.createFromHexString(id) },
-        { $set: { text, status } }
+        { $set: { text, status, comment } }
       );
     console.debug("updateTodo result:", result);
     revalidatePath("/");

@@ -11,11 +11,7 @@ export default async function Home() {
         <section className="mt-10 w-full md:max-w-screen-md">
           <h2 className="text-xl mb-3 md:mb-5">Todos</h2>
           {todos.map((todo) => (
-            <Todo
-              id={todo._id.toString()}
-              key={todo._id.toString()}
-              {...todo}
-            />
+            <Todo key={todo._id.toString()} {...todo} />
           ))}
         </section>
       )}
