@@ -6,7 +6,7 @@ interface TodoProps {
   id: number;
 }
 
-export default function Todo({ text, id }: TodoProps) {
+export function Todo({ text, id }: TodoProps) {
   const [showUpdateInput, setShowUpdateInput] = useState(false);
   const [newText, setNewText] = useState(text);
 

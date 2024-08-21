@@ -1,7 +1,7 @@
 "use client";
 import { FormEventHandler, useState } from "react";
 
-export default function CreateTodo() {
+export function CreateTodo() {
   const [text, setText] = useState("");
 
   const handleSubmit: FormEventHandler = async (e) => {

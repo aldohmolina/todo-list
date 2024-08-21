@@ -1,19 +1,20 @@
-import CreateTodo from "@/components/CreateTodo";
-import Todo from "@/components/Todo";
+import { getTodos } from "@/actions";
+import { CreateTodo, Todo } from "@/components";
 
-export default function Home() {
+export default async function Home() {
+  const todos = (await getTodos()) ?? [];
   return (
     <main className="flex min-h-screen flex-col items-center p-5">
       <h1 className="text-3xl">NextJS & MongoDB | Todos App</h1>
-
       <CreateTodo />
-
-      <section className="mt-10 w-full md:max-w-screen-md">
-        <h2 className="text-xl mb-3 md:mb-5">Todos</h2>
-        {Array.from([1, 2, 3]).map((todo) => (
-          <Todo text={todo.toString()} key={todo} id={todo} />
-        ))}
-      </section>
+      {todos.length > 0 && (
+        <section className="mt-10 w-full md:max-w-screen-md">
+          <h2 className="text-xl mb-3 md:mb-5">Todos</h2>
+          {todos.map(({ text, _id }) => (
+            <Todo text={text} key={_id.toString()} id={_id} />
+          ))}
+        </section>
+      )}
     </main>
   );
 }
