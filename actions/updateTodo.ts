@@ -6,16 +6,21 @@ import { revalidatePath } from "next/cache";
 interface IUpdateTodo {
   text: string;
   id: string;
+  status: "pending" | "completed";
 }
 
-export const updateTodo = async ({ text, id }: IUpdateTodo) => {
+export const updateTodo = async ({
+  text,
+  id,
+  status = "pending",
+}: IUpdateTodo) => {
   try {
     const result = await client
       .db("app-todos")
       .collection("todos")
       .findOneAndUpdate(
         { _id: ObjectId.createFromHexString(id) },
-        { $set: { text } }
+        { $set: { text, status } }
       );
     console.debug("updateTodo result:", result);
     revalidatePath("/");

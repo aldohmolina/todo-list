@@ -18,7 +18,7 @@ export function CreateTodo() {
   };
 
   return (
-    <div className="md:mt-10 mt-5 border rounded md:p-5 p-2 flex flex-col items-center justify-center w-full md:max-w-screen-md">
+    <div className="md:mt-10 mt-5 border rounded-md md:p-5 p-2 flex flex-col items-center justify-center w-full md:max-w-screen-md bg-opacity-20 bg-blue-gray-500 border-blue-gray-200">
       <h3 className="text-xl">Create Todo:</h3>
       <form onSubmit={handleSubmit} className="flex flex-col md:p-5 p-2 w-full">
         <label htmlFor="create-todo">
@@ -31,7 +31,9 @@ export function CreateTodo() {
             className="text-black rounded w-full p-1"
           />
         </label>
-        <button className="mt-2 hover:border hover:rounded">CREATE</button>
+        <button className="mt-2 hover:border-white hover:rounded border rounded border-blue-gray-200 w-min py-1 px-3 place-self-center">
+          CREATE
+        </button>
       </form>
     </div>
   );
