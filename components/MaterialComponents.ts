@@ -12,4 +12,5 @@ export {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Button,
 } from "@material-tailwind/react";

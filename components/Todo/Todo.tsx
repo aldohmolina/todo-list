@@ -105,10 +105,13 @@ export function Todo(todo: TodoProps) {
         />
         <ButtonSaveComment handleOnUpdateComment={handleOnUpdateComment} />
       </SectionComment>
-      <SectionSubstak showSubstak={todo.subtasks.length > 0}>
-        {todo.subtasks.map((st) => (
-          <SubTask idTodo={todo.id} key={st.id} {...st} />
-        ))}
+      <SectionSubstak
+        showSubstak={todo?.subtasks && todo?.subtasks?.length > 0}
+      >
+        {todo?.subtasks &&
+          todo?.subtasks?.map((st) => (
+            <SubTask idTodo={todo.id} key={st.id} {...st} />
+          ))}
       </SectionSubstak>
       <Dialog
         className="bg-opacity-20 bg-blue-gray-500"
