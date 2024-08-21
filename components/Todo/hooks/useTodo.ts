@@ -1,36 +1,51 @@
 import { createSubtask, deleteTodo, updateTodo } from "@/actions";
-import { ITodo } from "@/types";
-import { ChangeEventHandler, useState } from "react";
+import { ISubtask, ITodo } from "@/types";
+import {
+  ChangeEventHandler,
+  EventHandler,
+  MouseEventHandler,
+  useState,
+} from "react";
 
-export const useTodo = ({ id, text, status, comment }: ITodo) => {
+export const useTodo = (todo: ITodo) => {
   const [showUpdateInput, setShowUpdateInput] = useState(false);
-  const [newText, setNewText] = useState(text);
-  const [newStatus, setNewStatus] = useState(status);
-  const [newComment, setNewComment] = useState(comment);
+  const [newText, setNewText] = useState(todo.text);
+  const [newStatus, setNewStatus] = useState(todo.status);
+  const [newComment, setNewComment] = useState(todo.comment);
   const [showComment, setShowComment] = useState(false);
   const [showSubtask, setShowSubtask] = useState(false);
   const [newSubtask, setNewSubtask] = useState("");
   const [showCreateSubtask, setShowCreateSubtask] = useState(false);
+  const [newSubtasks, setNewSubtasks] = useState<ISubtask[]>(todo.subtasks);
+  const id = todo.id;
 
-  const handleOnUpdateText = async () => {
+  const handleOnUpdateText: MouseEventHandler = async () => {
+    setShowUpdateInput(!showUpdateInput);
     await updateTodo({
       text: newText,
+      status: newStatus,
+      comment: newComment,
+      subtasks: newSubtasks,
       id,
     });
-    setShowUpdateInput(!showUpdateInput);
   };
 
   const handleOnUpdateStatus = async () => {
-    const _newStatus = newStatus === "completed" ? "pending" : "completed";
-    setNewStatus(_newStatus);
+    setNewStatus((state) => (state !== "completed" ? "completed" : "pending"));
     await updateTodo({
-      status: _newStatus,
+      comment: newComment,
+      text: newText,
+      subtasks: newSubtasks,
+      status: newStatus !== "completed" ? "completed" : "pending",
       id,
     });
   };
 
-  const handleOnUpdateComment = async () => {
+  const handleOnUpdateComment: MouseEventHandler = async () => {
     await updateTodo({
+      text: newText,
+      status: newStatus,
+      subtasks: newSubtasks,
       comment: newComment,
       id,
     });
@@ -41,25 +56,25 @@ export const useTodo = ({ id, text, status, comment }: ITodo) => {
     setNewText(e.target.value);
   };
 
-  const handleOnDeleteTodo = async () => {
+  const handleOnDeleteTodo: MouseEventHandler = async () => {
     await deleteTodo(id);
   };
 
-  const handleOnCreateSubtask = async () => {
+  const handleOnCreateSubtask: MouseEventHandler = async () => {
     await createSubtask(id, { text: newSubtask });
     setNewSubtask("");
     setShowCreateSubtask(!showCreateSubtask);
   };
 
-  const handleOnShowCreateSubtask = () => {
+  const handleOnShowCreateSubtask: MouseEventHandler = () => {
     setShowCreateSubtask(!showCreateSubtask);
   };
 
-  const handleOnShowComment = () => {
+  const handleOnShowComment: MouseEventHandler = () => {
     setShowComment(!showComment);
   };
 
-  const handleOnShowUpdateInput = () => {
+  const handleOnShowUpdateInput: MouseEventHandler<HTMLButtonElement> = () => {
     setShowUpdateInput(!showUpdateInput);
   };
 
@@ -67,6 +82,12 @@ export const useTodo = ({ id, text, status, comment }: ITodo) => {
     e
   ) => {
     setNewComment(e.target.value);
+  };
+
+  const handleOnChangeNewSubtask: ChangeEventHandler<HTMLInputElement> = (
+    e
+  ) => {
+    setNewSubtask(e.target.value);
   };
 
   return {
@@ -88,5 +109,6 @@ export const useTodo = ({ id, text, status, comment }: ITodo) => {
     handleOnShowComment,
     handleOnChangeCommnet,
     handleOnShowUpdateInput,
+    handleOnChangeNewSubtask,
   };
 };

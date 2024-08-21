@@ -1,16 +1,17 @@
 import { ITodo } from "@/types";
-import React from "react";
+import React, { FC } from "react";
 import { useTodo } from "../hooks/useTodo";
-import { TrashIcon } from "@heroicons/react/16/solid";
+import { XCircleIcon } from "@heroicons/react/16/solid";
 
-export const ButtonCancelInput = (todo: ITodo) => {
-  const { handleOnShowUpdateInput } = useTodo(todo);
+export const ButtonCancelInput: FC<{
+  handleOnShowUpdateInput: any;
+}> = ({ handleOnShowUpdateInput }) => {
   return (
     <button
-      onClick={async () => handleOnShowUpdateInput()}
+      onClick={handleOnShowUpdateInput}
       className="hover:border hover:rounded p-1"
     >
-      <TrashIcon className="size-6 text-white" />
+      <XCircleIcon className="size-6 text-white" />
     </button>
   );
 };

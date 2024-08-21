@@ -18,9 +18,9 @@ export const updateSubtask = async (
       );
 
     console.debug("updateSubtask result:", result);
-    return result;
-
     revalidatePath("/");
+
+    return result;
   } catch (error) {
     console.error("updateSubtask error:", error);
   }

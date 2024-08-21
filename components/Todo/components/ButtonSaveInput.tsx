@@ -1,15 +1,14 @@
 import { ITodo } from "@/types";
-import React from "react";
+import React, { FC } from "react";
 import { useTodo } from "../hooks/useTodo";
 import { DocumentCheckIcon } from "@heroicons/react/16/solid";
 
-export const ButtonSave = (todo: ITodo) => {
-  const { handleOnUpdateText } = useTodo(todo);
+export const ButtonSaveInput: FC<{
+  handleOnUpdateText: any;
+}> = ({ handleOnUpdateText }) => {
   return (
     <button
-      onClick={async () => {
-        await handleOnUpdateText();
-      }}
+      onClick={handleOnUpdateText}
       className="hover:border hover:rounded p-1"
     >
       <DocumentCheckIcon className="size-6 text-white" />

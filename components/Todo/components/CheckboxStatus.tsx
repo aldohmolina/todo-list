@@ -1,11 +1,12 @@
-import { Checkbox as _Checkbox } from "@/components";
-import { useTodo } from "../hooks/useTodo";
-import { ITodo } from "@/types";
+import { Checkbox } from "@/components";
+import { FC } from "react";
 
-export const Checkbox = (todo: ITodo) => {
-  const { newStatus, handleOnUpdateStatus } = useTodo(todo);
+export const CheckboxStatus: FC<{
+  newStatus: any;
+  handleOnUpdateStatus: any;
+}> = ({ newStatus, handleOnUpdateStatus }) => {
   return (
-    <_Checkbox
+    <Checkbox
       checked={newStatus === "completed"}
       color="green"
       onChange={async () => {
