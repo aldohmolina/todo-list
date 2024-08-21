@@ -25,7 +25,7 @@ export function Todo({ text, id }: TodoProps) {
       {/* UPDATE TODO INPUT  */}
       {showUpdateInput && (
         <input
-          className="text-black mx-2 rounded  w-6/12 p-1"
+          className="text-black mx-2 rounded  p-1 flex-1"
           value={newText}
           onChange={(e) => setNewText(e.target.value)}
           type="text"
@@ -33,7 +33,7 @@ export function Todo({ text, id }: TodoProps) {
       )}
 
       {/* CANCEL BUTTON OR DELETE BUTTON */}
-      <div className="space-x-5 w-6/12">
+      <div className="space-x-5">
         {showUpdateInput ? (
           <button
             onClick={() => setShowUpdateInput(!showUpdateInput)}
