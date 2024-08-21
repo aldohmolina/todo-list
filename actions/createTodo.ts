@@ -9,6 +9,6 @@ export const createTodo = async ({ text }: Partial<ITodo>) => {
     .db("app-todos")
     .collection("todos")
     .insertOne({ text });
-  console.log("newTODO created:", newTodo);
+  console.debug("newTODO created:", newTodo);
   revalidatePath("/");
 };

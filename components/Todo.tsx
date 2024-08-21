@@ -1,9 +1,10 @@
 "use client";
+import { deleteTodo } from "@/actions";
+import { ITodo } from "@/types";
 import { MouseEventHandler, useState } from "react";
 
-interface TodoProps {
-  text: string;
-  id: number;
+interface TodoProps extends ITodo {
+  id: string;
 }
 
 export function Todo({ text, id }: TodoProps) {
@@ -42,7 +43,7 @@ export function Todo({ text, id }: TodoProps) {
           </button>
         ) : (
           <button
-            onClick={() => console.log(`Deleting todo: ${id}`)}
+            onClick={async () => await deleteTodo(id)}
             className="hover:border hover:rounded p-1"
           >
             DELETE
