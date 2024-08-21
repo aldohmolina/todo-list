@@ -1,5 +1,5 @@
 "use client";
-import { deleteTodo } from "@/actions";
+import { deleteTodo, updateTodo } from "@/actions";
 import { ITodo } from "@/types";
 import { MouseEventHandler, useState } from "react";
 
@@ -11,9 +11,9 @@ export function Todo({ text, id }: TodoProps) {
   const [showUpdateInput, setShowUpdateInput] = useState(false);
   const [newText, setNewText] = useState(text);
 
-  const handleUpdate: MouseEventHandler = (e) => {
+  const handleUpdate: MouseEventHandler = async (e) => {
     e.preventDefault();
-    console.log(`Updating todo: ${id}`);
+    await updateTodo({ text: newText, id });
     setShowUpdateInput(!showUpdateInput);
   };
 
