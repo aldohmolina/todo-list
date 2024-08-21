@@ -7,6 +7,8 @@ export function CreateTodo() {
 
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
+    if (!text) return;
+    if (!/^[a-zA-Z0-9_ ]*$/.test(text)) return;
     try {
       createTodo({ text });
       setText("");
