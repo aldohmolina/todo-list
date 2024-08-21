@@ -15,9 +15,9 @@ export default function CreateTodo() {
   };
 
   return (
-    <div className="mt-10 border rounded p-5 flex flex-col items-center justify-center min-w-96">
-      <div className="text-xl">Create Todo:</div>
-      <form onSubmit={handleSubmit} className="flex flex-col p-5">
+    <div className="md:mt-10 mt-5 border rounded md:p-5 p-2 flex flex-col items-center justify-center w-full md:max-w-screen-md">
+      <h3 className="text-xl">Create Todo:</h3>
+      <form onSubmit={handleSubmit} className="flex flex-col md:p-5 p-2 w-full">
         <label htmlFor="create-todo">
           <input
             value={text}
@@ -25,7 +25,7 @@ export default function CreateTodo() {
             type="text"
             name="todo-text"
             id="todo-text"
-            className="text-black rounded"
+            className="text-black rounded w-full"
           />
         </label>
         <button className="mt-2 hover:border hover:rounded">CREATE</button>

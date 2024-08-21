@@ -17,14 +17,14 @@ export default function Todo({ text, id }: TodoProps) {
   };
 
   return (
-    <div className="border rounded p-5 flex justify-between items-center min-w-96 mt-5 min-h-24">
+    <div className="border rounded md:p-5 p-3 flex justify-between items-center md:mt-5 mt-3 w-full min-h-10 ">
       {/* TODO TEXT  */}
-      <div>{text}</div>
+      {!showUpdateInput && <div className="flex">{text}</div>}
 
       {/* UPDATE TODO INPUT  */}
       {showUpdateInput && (
         <input
-          className="text-black mx-2 rounded"
+          className="text-black mx-2 rounded  w-6/12 p-1"
           value={newText}
           onChange={(e) => setNewText(e.target.value)}
           type="text"
@@ -32,7 +32,7 @@ export default function Todo({ text, id }: TodoProps) {
       )}
 
       {/* CANCEL BUTTON OR DELETE BUTTON */}
-      <div className="space-x-5">
+      <div className="space-x-5 w-6/12">
         {showUpdateInput ? (
           <button
             onClick={() => setShowUpdateInput(!showUpdateInput)}
