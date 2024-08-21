@@ -13,10 +13,8 @@ export const useTodo = (todo: ITodo) => {
   const [newStatus, setNewStatus] = useState(todo.status);
   const [newComment, setNewComment] = useState(todo.comment);
   const [showComment, setShowComment] = useState(false);
-  const [showSubtask, setShowSubtask] = useState(false);
   const [newSubtask, setNewSubtask] = useState("");
   const [showCreateSubtask, setShowCreateSubtask] = useState(false);
-  const [newSubtasks, setNewSubtasks] = useState<ISubtask[]>(todo.subtasks);
   const id = todo.id;
 
   const handleOnUpdateText: MouseEventHandler = async () => {
@@ -25,17 +23,23 @@ export const useTodo = (todo: ITodo) => {
       text: newText,
       status: newStatus,
       comment: newComment,
-      subtasks: newSubtasks,
+      subtasks: todo.subtasks,
       id,
     });
   };
 
   const handleOnUpdateStatus = async () => {
+    if (
+      todo.status === "pending" &&
+      todo.subtasks.some((st) => st.status === "pending")
+    ) {
+      return;
+    }
     setNewStatus((state) => (state !== "completed" ? "completed" : "pending"));
     await updateTodo({
       comment: newComment,
       text: newText,
-      subtasks: newSubtasks,
+      subtasks: todo.subtasks,
       status: newStatus !== "completed" ? "completed" : "pending",
       id,
     });
@@ -45,7 +49,7 @@ export const useTodo = (todo: ITodo) => {
     await updateTodo({
       text: newText,
       status: newStatus,
-      subtasks: newSubtasks,
+      subtasks: todo.subtasks,
       comment: newComment,
       id,
     });
@@ -96,7 +100,6 @@ export const useTodo = (todo: ITodo) => {
     newStatus,
     newComment,
     showComment,
-    showSubtask,
     newSubtask,
     showCreateSubtask,
     handleOnUpdateText,

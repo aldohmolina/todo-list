@@ -1,23 +1,55 @@
 "use server";
 import { client } from "@/db";
-import { ISubtask } from "@/types";
+import { ISubtask, ITodo } from "@/types";
 import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
 
 export const updateSubtask = async (
-  id: string,
-  { text, status }: Partial<ISubtask>
+  idTodo: string,
+  { id, ...subtask }: Partial<ISubtask>
 ) => {
   try {
-    const result = await client
+    console.log("subtask to update", { subtask });
+    let result;
+    result = await client
       .db("app-todos")
       .collection("sub-todo")
       .findOneAndUpdate(
-        { _id: ObjectId.createFromHexString(id) },
-        { $set: { text, status } }
+        { _id: ObjectId.createFromHexString(id as string) },
+        {
+          $set: { id, ...subtask },
+        }
       );
 
     console.debug("updateSubtask result:", result);
+
+    const todo = (await client
+      .db("app-todos")
+      .collection("todos")
+      .findOne({ _id: ObjectId.createFromHexString(idTodo) })) as ITodo;
+
+    result = await client
+      .db("app-todos")
+      .collection("todos")
+      .findOneAndUpdate(
+        { _id: ObjectId.createFromHexString(idTodo) },
+        {
+          $set: {
+            ...todo,
+            subtasks: (todo.subtasks ?? []).map((st) =>
+              st.id === id
+                ? {
+                    id,
+                    ...subtask,
+                  }
+                : st
+            ),
+          },
+        }
+      );
+
+    console.debug("updateTodo result: ", result);
+
     revalidatePath("/");
 
     return result;

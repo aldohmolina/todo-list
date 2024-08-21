@@ -14,4 +14,5 @@ export interface ISubtask {
   status: "pending" | "completed";
   subtask_id: ObjectId;
   id: string;
+  _id?: ObjectId;
 }

@@ -16,7 +16,11 @@ export const deleteTodo = async (id: string) => {
       _id: ObjectId.createFromHexString(id),
     })) as ITodo;
     let result;
-    result = await deleteSubtask(todo.subtasks.map((subtask) => subtask.id));
+    result = await deleteSubtask(
+      todo.id,
+      todo.subtasks.map((subtask) => subtask.id)
+    );
+    console.debug("delete subtask result:", result);
     result = await client
       .db("app-todos")
       .collection("todos")

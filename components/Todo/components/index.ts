@@ -10,3 +10,4 @@ export * from "./CheckboxStatus";
 export * from "./SectionButtons";
 export * from "./SectionComment";
 export * from "./TodoCard";
+export * from "./SectionSubtask";

@@ -1,5 +1,5 @@
 "use client";
-import { ITodo } from "@/types";
+import { ISubtask, ITodo } from "@/types";
 import { Dialog, DialogBody, Textarea } from "@/components";
 import { useTodo } from "./hooks";
 import {
@@ -14,10 +14,11 @@ import {
   CheckboxStatus,
   SectionButtons,
   SectionComment,
+  SectionSubstak,
   TodoCard,
 } from "./components";
 import { ButtonSaveSubtask } from "./components/ButtonSaveSubtask";
-import { createContext, useContext, useEffect } from "react";
+import { SubTask } from "../SubTask";
 
 interface TodoProps extends ITodo {
   id: string;
@@ -104,6 +105,11 @@ export function Todo(todo: TodoProps) {
         />
         <ButtonSaveComment handleOnUpdateComment={handleOnUpdateComment} />
       </SectionComment>
+      <SectionSubstak showSubstak={todo.subtasks.length > 0}>
+        {todo.subtasks.map((st) => (
+          <SubTask idTodo={todo.id} key={st.id} {...st} />
+        ))}
+      </SectionSubstak>
       <Dialog
         className="bg-opacity-20 bg-blue-gray-500"
         open={showCreateSubtask}

@@ -1,3 +1,3 @@
-export * from "./Todo/Todo";
+export * from "./Todo";
 export * from "./CreateTodo";
 export * from "./MaterialComponents";
