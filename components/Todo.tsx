@@ -1,5 +1,5 @@
 "use client";
-import { deleteTodo, updateTodo } from "@/actions";
+import { createSubtask, deleteTodo, updateTodo } from "@/actions";
 import { ITodo } from "@/types";
 import {
   Card,
@@ -7,6 +7,8 @@ import {
   CardFooter,
   Checkbox,
   Collapse,
+  Dialog,
+  DialogBody,
   Textarea,
 } from "@/components";
 import { MouseEventHandler, useState } from "react";
@@ -16,6 +18,7 @@ import {
   ChatBubbleLeftEllipsisIcon,
   XCircleIcon,
   DocumentCheckIcon,
+  SquaresPlusIcon,
 } from "@heroicons/react/16/solid";
 
 interface TodoProps extends ITodo {
@@ -28,6 +31,9 @@ export function Todo({ text, id, status, comment }: TodoProps) {
   const [newStatus, setNewStatus] = useState(status);
   const [newComment, setNewComment] = useState(comment);
   const [showComment, setShowComment] = useState(false);
+  const [showSubtask, setShowSubtask] = useState(false);
+  const [newSubtask, setNewSubtask] = useState("");
+  const [showCreateSubtask, setShowCreateSubtask] = useState(false);
 
   const handleUpdate: MouseEventHandler = async (e) => {
     e.preventDefault();
@@ -115,16 +121,37 @@ export function Todo({ text, id, status, comment }: TodoProps) {
               )}
             </button>
           )}
+          {!showUpdateInput && (
+            <button
+              className="hover:border hover:rounded p-1"
+              onClick={() => setShowCreateSubtask(!showCreateSubtask)}
+            >
+              <SquaresPlusIcon className="size-6 text-white" />
+            </button>
+          )}
         </div>
       </div>
       <Collapse open={showComment}>
-        <Card className="my-4 mx-auto w-8/12 bg-opacity-20 bg-blue-gray-500">
-          <CardBody className="flex flex-col">
+        <Card
+          className="my-4 mx-auto w-8/12 bg-opacity-20 bg-blue-gray-500"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          <CardBody
+            className="flex flex-col"
+            placeholder={undefined}
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+          >
             <Textarea
               variant="static"
               className="text-white mx-2 rounded p-1 flex-1"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+              placeholder="Add a comment"
             />
             <button
               className="hover:border hover:rounded p-1 ml-auto"
@@ -140,6 +167,38 @@ export function Todo({ text, id, status, comment }: TodoProps) {
           </CardBody>
         </Card>
       </Collapse>
+      <Dialog
+        className="bg-opacity-20 bg-blue-gray-500"
+        open={showCreateSubtask}
+        handler={() => setShowCreateSubtask(!showCreateSubtask)}
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      >
+        <DialogBody
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          <input
+            value={newSubtask}
+            onChange={(e) => setNewSubtask(e.target.value)}
+            type="text"
+            placeholder="Create a subtask"
+            className="text-black rounded w-full p-1"
+          />
+          <button
+            onClick={async () => {
+              await createSubtask(id, { text: newSubtask });
+              setNewSubtask("");
+              setShowCreateSubtask(false);
+            }}
+            className="mt-5 hover:border-white hover:rounded border rounded border-blue-gray-200 w-min py-1 px-3 place-self-center"
+          >
+            CREATE
+          </button>
+        </DialogBody>
+      </Dialog>
     </>
   );
 }

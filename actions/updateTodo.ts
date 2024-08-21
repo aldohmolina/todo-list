@@ -9,6 +9,7 @@ export const updateTodo = async ({
   id = "",
   status = "pending",
   comment = "",
+  subtasks = [],
 }: Partial<ITodo>) => {
   try {
     const result = await client
@@ -16,7 +17,7 @@ export const updateTodo = async ({
       .collection("todos")
       .findOneAndUpdate(
         { _id: ObjectId.createFromHexString(id) },
-        { $set: { text, status, comment } }
+        { $set: { text, status, comment, subtasks } }
       );
     console.debug("updateTodo result:", result);
     revalidatePath("/");

@@ -6,5 +6,12 @@ export interface ITodo {
   status: "pending" | "completed";
   id: string;
   comment: string;
-  subtask: Array<ITodo>;
+  subtasks: Array<ISubtask>;
+}
+
+export interface ISubtask {
+  text: string;
+  status: "pending" | "completed";
+  subtask_id: ObjectId;
+  id: string;
 }
