@@ -1,8 +1,11 @@
-import client from "@/db";
-
-const db = client.db("app-todos");
+"use server";
+import { client } from "@/db";
 
 export const getTodos = async () => {
-  const todos = await db.collection("todos").find().toArray();
+  const todos = await client
+    .db("app-todos")
+    .collection("todos")
+    .find()
+    .toArray();
   return todos;
 };

@@ -1,4 +1,5 @@
 "use client";
+import { createTodo } from "@/actions";
 import { FormEventHandler, useState } from "react";
 
 export function CreateTodo() {
@@ -7,7 +8,7 @@ export function CreateTodo() {
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
     try {
-      console.log("creating todo...");
+      createTodo({ text });
       setText("");
     } catch (e) {
       console.log(e);
@@ -25,7 +26,7 @@ export function CreateTodo() {
             type="text"
             name="todo-text"
             id="todo-text"
-            className="text-black rounded w-full"
+            className="text-black rounded w-full p-1"
           />
         </label>
         <button className="mt-2 hover:border hover:rounded">CREATE</button>
